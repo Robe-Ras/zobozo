@@ -1,76 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gossip Details</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .comment-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .comment {
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .comment-content {
+      margin-top: 10px;
+    }
+    /* Ajustement de la largeur du bloc des commentaires */
+    .comment-card {
+      width: 100%;
+    }
+    /* Décalage du bouton Valider */
+    .btn-validate {
+      margin-left: auto; /* Déplace le bouton Valider vers la droite */
+    }
+  </style>
+</head>
+<body>
 
-<br/>
-<h1>Gossip Details</h1></br></br>
-
-<div class="container mt-5 mb-5">
-            <div class="row height d-flex justify-content-center align-items-center">
-              <div class="col-md-7">
-                <div class="card">
-                  <div class="p-3">
-
-    <div>
-      <p><strong>Titre:</strong> <%= @gossip.title %></p>
-      <p><strong>Contenu:</strong> <%= @gossip.content %></p>
-      <p><strong>Auteur:</strong> <%= link_to @gossip.user.first_name, user_path(@gossip.user) %></p>
-      <p><strong>Ville:</strong> <%= link_to @gossip.user.city.name, city_path(@gossip.user.city) %></p>
-        <%= link_to "Modifier", edit_gossip_path(@gossip), class: "btn btn-primary" %>  
-        <%= form_with(url: gossip_path(@gossip), method: "delete") do |f| %>
-          <%= f.button "Supprimer", data: { confirm: "Are you sure?" }, class: "btn btn-danger mx-1" %>
-        <% end %> 
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card box-shadow mx-auto my-5" style="width: 18rem;">
+        <img src="<%= @gossip.image_url %>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= @gossip.title %></h5>
+          <hr>
+          <% if @gossip.user %>
+            <p class="card-text">Par : <%= @gossip.user.first_name %></p>
+          <% else %>
+            <p class="card-text">Par : Anonyme</p>
+          <% end %>
+          <p class="card-text"><%= @gossip.content %></p>
+        </div>
+      </div>
     </div>
- 
-</div>
-                
-              </div>
-              
+
+    <div class="col-md-6">
+      <div class="card box-shadow mx-auto my-5 comment-card">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Commentaires</h6>
+          <div class="comment">
+            <div class="d-flex flex-row align-items-center">
+              <img src="https://i.imgur.com/zQZSWrt.jpg" alt="avatar" class="comment-avatar">
+              <input type="text" class="form-control" placeholder="Enter your comment...">
+              <%= link_to "Valider", type: "submit", class: "btn btn-primary ml-2 btn-validate" %> 
             </div>
-            </div>
-            
           </div>
 
-        <div class="container mt-5 mb-5">
-            <div class="row height d-flex justify-content-center align-items-center">
-              <div class="col-md-7">
-                <div class="card">
-                  <div class="p-3">
-                    <h6>Commentaires</h6>                    
+          <div class="comment">
+            <div class="d-flex flex-row align-items-center">
+              <img src="https://i.imgur.com/zQZSWrt.jpg" alt="avatar" class="comment-avatar">
+              <div class="comment-content">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex flex-row align-items-center">
+                    <span class="mr-2"><%=@gossip.user.first_name%>/user loggé</span>                              
                   </div>
-
-                  <div class="mt-3 d-flex flex-row align-items-center p-3 form-color">
-
-                    <img src="https://i.imgur.com/zQZSWrt.jpg" width="50" class="rounded-circle mr-2">
-                    <input type="text" class="form-control" placeholder="Enter your comment...">
-                    <%= link_to "Valider", type: "submit", class: "btn btn-primary" %> 
-
-                  </div>
-
-
-              <div class="mt-2">                    
-                
-                  <div class="p-3">
-                    <div class="d-flex flex-row p-3">
-                      <img src="https://i.imgur.com/zQZSWrt.jpg" width="40" height="40" class="rounded-circle mr-3">
-                      <div class="w-100">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-row align-items-center">
-                              <span class="mr-2"><%=@gossip.user.first_name%>/user loggé</span>                              
-                            </div>
-                            <small>12h ago</small>
-                        </div>
-                        <div class="card-body">
-                            
-                            
-                            <p class="text-justify comment-text mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                            <%= link_to "Modifier", href:"/gossips/:gossip_id/comments/:id/edit", class: "btn btn-primary" %>                                             
-                      </div>                    
-                    </div>
-                  </div>                    
-                                                               
-              </div>                
+                  <small>12h ago</small>
+                </div>
+                <div class="card-body">
+                  <p class="text-justify comment-text mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+                  <%= link_to "Modifier", href:"/gossips/:gossip_id/comments/:id/edit", class: "btn btn-primary" %>                                             
+                </div>                    
+              </div>
             </div>
-              
           </div>
         </div>
-            
-          </div>
-        
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

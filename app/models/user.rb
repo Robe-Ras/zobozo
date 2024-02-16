@@ -1,5 +1,5 @@
 require 'bcrypt'
-#ici
+
 class User < ApplicationRecord
   has_secure_password
 

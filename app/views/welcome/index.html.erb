@@ -1,41 +1,85 @@
 <%= javascript_include_tag 'typewriter' %>
 
-<div class="static-slider7" style="background-image:url(https://getwallpapers.com/wallpaper/full/b/2/a/319250.jpg); background-position: top;">
-<div class="container">
+
+<div class="static-slider7" style="background-image:url(https://img.freepik.com/free-photo/medium-shot-woman-holding-smartphone_23-2149445823.jpg?w=900&t=st=1707986103~exp=1707986703~hmac=ef9ec34d8d3f7847917cfa91883dc9929a604e23e49b7de270eefa426277feac); background-position: top;">
+  <div class="container">
     <!-- Row  -->
     <div class="row justify-content-center">
-        <!-- Column -->
-        <div class="col-md-8 align-self-center text-center">
-            <h1 class="text-white">Bienvenue <%="#{@user.first_name} #{@user.last_name}"%> !</h1>
-            <br/>
-            <h1 class="title text-white typewrite" data-period="2000" data-type='["Gossip", "Shame", "Story", "NO FAKE !"]'></h1>
-            <br/>
-            <h3 class="text-white">TGP, le site de référence ultime dans le Gossip !</h3>
-            <h5 class="text-white">Consulte ou crée dès à présent ton potin !</h5>
-            <a class="btn btn-danger-gradiant rounded-pill btn-md mt-3 border-0 text-white" href="<%=new_gossip_path%>"><span>CRÉE TON GOSSIP <i class="ti-arrow-right"></i></span></a>
-        </div>
-        <!-- Column -->
-    </div>
-</div>
-</div>
-
-
-<div class="row">
-
-  <% @gossips.sort_by{|g| - g.id}.each do |gossip| %>
-    <div class="col-md-4">
-      <div class="card mb-3">
-        
-        <div class="card-body">
-          <h5 class="card-title"><%= gossip.title %></h5>
-          <p class="card-text">Par : <%= gossip.user.first_name %></p>
-          <p class="card-text"><%= gossip.content %></p>
-          <%= link_to "Voir plus", gossip_path(gossip), class: "btn btn-primary" %>
-          <%= link_to "Modifier", edit_gossip_path(gossip), class: "btn btn-primary" %>
-        </div>
+      <!-- Column -->
+      <div class="col-md-8 align-self-center text-center">
+        <% if @user %>
+          <h1 class="text-white typewriter-title">Bienvenue <%= "#{@user.first_name} #{@user.last_name}" %> !</h1>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <h1 class="title text-white typewrite" data-period="2000" data-type='["Gossip", "Shame", "Story", "NO FAKE !"]'></h1>
+          <br/>
+          <h3 class="text-white">TGP, le site de référence ultime dans le Gossip !</h3>
+          <h5 class="text-white">Consulte ou crée dès à présent ton potin !</h5>
+          <a class="btn btn-danger-gradiant rounded-pill btn-md mt-3 border-0 text-white" href="<%= new_gossip_path %>"><span>CRÉE TON GOSSIP <i class="ti-arrow-right"></i></span></a>
+        <% else %>
+          <h1 class="text-white">Bienvenue Invité !</h1>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <h1 class="title text-white typewrite" data-period="2000" data-type='["Gossip", "Shame", "Story", "NO FAKE !"]'></h1>
+          <br/>
+          <h3 class="text-white">TGP, le site de référence ultime dans le Gossip !</h3>
+          <h5 class="text-white">Consulte ou crée dès à présent ton potin !</h5>
+          <a class="btn btn-danger-gradiant rounded-pill btn-md mt-3 border-0 text-white" href="<%= new_gossip_path %>"><span>CRÉE TON GOSSIP <i class="ti-arrow-right"></i></span></a>
+        <% end %>
       </div>
+      <!-- Column -->
     </div>
-  <% end %>
+  </div>
 </div>
 
-<%#  %>
+
+
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <% @gossips.sort_by{|g| - g.id}.each do |gossip| %>
+      <div class="col-md-4">
+        <!-- Début de l'élément avec les vagues et l'icône -->
+        <div class="card box-shadow mx-auto my-5" style="width: 18rem;">
+          <!-- Image aléatoire -->
+          <img src="<%= gossip.image_url %>" class="card-img-top" alt="...">
+          <div class="card-body">
+            <!-- Titre du gossip -->
+            <h5 class="card-title"><%= gossip.title %></h5>
+            <hr>
+            <!-- Auteur du gossip -->
+            <% if gossip.user %>
+              <p class="card-text">Par : <%= gossip.user.first_name %></p>
+            <% else %>
+              <p class="card-text">Par : Anonyme</p>
+            <% end %>
+            <!-- Contenu du gossip -->
+            <p class="card-text"><%= gossip.content %></p>
+            <!-- Bouton Voir plus -->
+            <%= link_to "Voir plus", gossip_path(gossip), class: "btn btn-primary" %>
+          </div>
+        </div>
+        <!-- Fin de l'élément avec les vagues et l'icône -->
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+

@@ -14,40 +14,63 @@
   <body data-turbo="false">
     <header>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/sessions/new">TheGossipProject</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/welcome/index">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/team/index">Team</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/contact/index">Contact</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Account
-          </a>
-          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <% if session[:user_id] %>
-              <li><a class="dropdown-item" href="<%= new_session_path %>">Logout</a></li>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/sessions/new">TheGossipProject</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/welcome/index">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/team/index">Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contact/index">Contact</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Account
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <% if session[:user_id] %>
+              <%= form_tag logout_path, method: :delete do %>
+                <%= submit_tag "Logout", class: "btn text-dark" %>
+              <% end %>
             <% else %>
               <li><a class="dropdown-item" href="<%= new_session_path %>">Login</a></li>
               <li><a class="dropdown-item" href="<%= new_user_path %>">Signup</a></li>
             <% end %>
+              </ul>
+            </li>
           </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+        </div>
+      </div>
+    </nav>
+    
+    
+    
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var logoutLink = document.getElementById('logout-link');
+    if (logoutLink) {
+      logoutLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        localStorage.setItem('previousUrl', window.location.href);
+        window.location.href = this.getAttribute('href');
+      });
+    }
+  });
+</script>
+
+
 </header>
 
 
@@ -57,38 +80,39 @@
     </main>
 
 
-<footer class="bg-body-tertiary text-center">
-  <!-- Grid container -->
-  <div class="container p-4 pb-0">
-    <!-- Section: Social media -->
-    <section class="mb-4">
-      <!-- LinkedIn Robena-->
-      <a class="btn text-white btn-floating m-1" href="https://www.linkedin.com/in/00robena00/" target="_blank" role="button">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Linkedin_circle.svg" alt="LinkedIn" width="30" height="30">
-      </a>
-      <!-- GitHub Robena-->
-      <a class="btn text-white btn-floating m-1" href="https://github.com/Robe-Ras" target="_blank" role="button">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" width="30" height="30">
-      </a>
-
-      <!-- LinkedIn Yann-->
-      <a class="btn text-white btn-floating m-1" href="https://www.linkedin.com/in/yann-rezigui-59b79a1b0/" target="_blank" role="button">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Linkedin_circle.svg" alt="LinkedIn" width="30" height="30">
-      </a>
-      <!-- GitHub Yann-->
-      <a class="btn text-white btn-floating m-1" href="https://github.com/YannRZG" target="_blank" role="button">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" width="30" height="30">
-      </a>
-    </section>
-  </div>
-  <!-- Grid container -->
-
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2024 Robena & Yann&nbsp;&nbsp;<strong>The Gossip Project</strong>
-  </div>
-  <!-- Copyright -->
-</footer>
+    <footer class="bg-body-tertiary text-center fixed-bottom">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: Social media -->
+      <section class="mb-4">
+        <!-- LinkedIn Robena-->
+        <a class="btn text-white btn-floating m-1" href="https://www.linkedin.com/in/00robena00/" target="_blank" role="button">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Linkedin_circle.svg" alt="LinkedIn" width="30" height="30">
+        </a>
+        <!-- GitHub Robena-->
+        <a class="btn text-white btn-floating m-1" href="https://github.com/Robe-Ras" target="_blank" role="button">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" width="30" height="30">
+        </a>
+  
+        <!-- LinkedIn Yann-->
+        <a class="btn text-white btn-floating m-1" href="https://www.linkedin.com/in/yann-rezigui-59b79a1b0/" target="_blank" role="button">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Linkedin_circle.svg" alt="LinkedIn" width="30" height="30">
+        </a>
+        <!-- GitHub Yann-->
+        <a class="btn text-white btn-floating m-1" href="https://github.com/YannRZG" target="_blank" role="button">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" width="30" height="30">
+        </a>
+      </section>
+    </div>
+    <!-- Grid container -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+      © 2024 Robena & Yann&nbsp;&nbsp;<strong>The Gossip Project</strong>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  
 
 
     <!-- Nos  liens vers les fichiers JavaScript -->

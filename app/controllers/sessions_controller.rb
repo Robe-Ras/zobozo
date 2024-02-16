@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     # on code quelque chose qui permet d'afficher le dashboard de l'utilisateur
     @current_user ||= User.find_by(id: session[:user_id])
     
-    redirect_to new_sessions_path
+    redirect_to root_path
     
   end
 
@@ -33,9 +33,11 @@ class SessionsController < ApplicationController
 
   def destroy
     logout # Utilisation de la méthode logout pour déconnecter l'utilisateur
+    session[:user_id] = nil # Effacer l'identifiant de session
     flash[:success] = 'You have successfully logged out.'
-    redirect_to new_session_path
+    redirect_to root_path
   end
+  
 
   private
 
